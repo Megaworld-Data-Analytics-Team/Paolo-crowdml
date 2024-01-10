@@ -8,13 +8,21 @@ import numpy as np
 import scipy
 
 model_path = "weights/dmcount.pth"
-device = torch.device('cuda')
+device = torch.device('cuda') #can be changed to cpu if a gpu is unavailable
 
 model = vgg19()
 model.to(device)
 model.load_state_dict(torch.load(model_path, device))
 model.eval()
 
+"""
+inp - input image as ndarray
+
+returns: 
+    dst - original image overlayed with heatmap visualization
+    int(count) - est. count of number of people in image
+
+"""
 def predict(inp):
     org_img = inp
     inp = Image.fromarray(inp.astype('uint8'), 'RGB')
@@ -34,15 +42,13 @@ def predict(inp):
 
     #overlay heatmap vis over original image
     dst = cv2.addWeighted(org_img, 0.5, vis_img, 0.9, 0)
-    # img_arr = np.hstack((org_img, vis_img))
-    # cv2.imshow('Input Images',img_arr)
-    # cv2.imshow('Blended Image',dst)
 
     return dst, int(count)
 
 
 title = "Distribution Matching for Crowd Counting"
 
+# sample images to be included in demo
 examples = [
     ["inputs/test.png"],
     ["inputs/img2.jpg"],
