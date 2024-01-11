@@ -6,6 +6,4 @@ Run `demo.py` to run the application. Console should output a local and public U
 
 `\inputs` contains the sample input images. 
 `\weights` contains the model weights.
-
-Known issues and limitations of the current model are documented (here).
  
